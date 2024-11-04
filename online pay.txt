@@ -1,0 +1,127 @@
+import os
+from tkinter import *
+from tkinter import messagebox, ttk
+import mysql.connector
+
+
+online = Tk()
+online.title("online payment")
+online.geometry("1550x800+0+0")
+online.config(bg='#f5f6f7')
+
+conn = mysql.connector.connect (host="localhost", database="billing", user="root", password="" )
+
+if(conn.is_connected()):
+    print("success")
+else :
+    print("Failed")
+
+def save():
+    account_no = mytextbox.get()
+    ifsc_code = mytextbox1.get()
+    holder_name = mytextbox2.get()
+    gst_no = mytextbox3.get()
+
+    cur = conn.cursor();
+    sql = "insert into online_payment (account_number, ifsc, holder_name ,Gst_no)values('"+account_no+"','"+ifsc_code+"','"+holder_name+"','"+gst_no+"');"
+    result = cur.execute(sql);
+    messagebox.showinfo("MESSAGE", "Records Inserted Successfully");
+    conn.commit();
+    cur.close();
+
+
+def update():
+    account_no = mytextbox.get()
+    ifsc_code = mytextbox1.get()
+    holder_name = mytextbox2.get()
+    gst_no = mytextbox3.get()
+
+    cur = conn.cursor();
+    sql = "update online_payment set account_number = '"+account_no+"',ifsc = '"+ifsc_code+"',  holder_name = '"+holder_name+"' ,Gst_no= '"+gst_no+"' where  account_number = '"+account_no+"' "
+    result = cur.execute(sql);
+    messagebox.showinfo("MESSAGE", "Records Updated Successfully");
+    conn.commit();
+    cur.close();
+
+
+def delete():
+    account_no = mytextbox.get()
+    ifsc_code = mytextbox1.get()
+    holder_name = mytextbox2.get()
+    gst_no = mytextbox3.get()
+
+    cur = conn.cursor();
+    sql = "delete from online_payment where account_number = '" +account_no+ "' "
+    result = cur.execute(sql);
+    messagebox.showinfo("MESSAGE", "Records Deleted Successfully");
+    conn.commit();
+    cur.close();
+
+
+def cancel():
+    account_no = mytextbox.get()
+    ifsc_code = mytextbox1.get()
+    holder_name = mytextbox2.get()
+    gst_no = mytextbox3.get()
+
+    os.system("home.py")
+
+
+myframe = Frame(online,bg="#2980b9", height=100, width=1550)
+myframe.place(x=0,y=0)
+lable= Label(online, text="Online payment", bg="#2980b9", font=("Times",20) )
+lable.place(x=640,y=50)
+
+headlable = Label(online, text="Account no.", bg='#fadbd8',font=("Times",12))
+headlable.place(x=100, y=150)
+mytextbox = Entry(online)
+mytextbox.place(x=250, y=150)
+
+headlable = Label(online, text="Ifsc code", bg='#fadbd8',font=("Times",12))
+headlable.place(x=100, y=200)
+mytextbox1 = Entry(online)
+mytextbox1.place(x=250, y=200)
+
+headlable = Label(online, text="Holder name", bg='#fadbd8',font=("Times",12))
+headlable.place(x=100, y=250)
+mytextbox2 = Entry(online)
+mytextbox2.place(x=250, y=250)
+
+
+headlable = Label(online, text="GST no.", bg='#fadbd8',font=("Times",12))
+headlable.place(x=100, y=300)
+mytextbox3 = Entry(online)
+mytextbox3.place(x=250, y=300)
+
+headlable = Label(online, text="Payment_mode", bg='#fadbd8',font=("Times",12))
+headlable.place(x=100, y=400)
+
+var = StringVar()
+cb = ttk.Combobox(online)
+cb["values"]= ("online","cash_pay")
+cb.place(x=250,y=400)
+
+
+
+
+btn = Button(online, text="Save" , font =("Times",16), fg="#181717" , command=save)
+btn.place(x=100, y=500)
+
+btn = Button(online, text="update" , font =("Times",16), fg="#181717" , command=update)
+btn.place(x=200, y=500)
+
+btn = Button(online, text="delete" , font =("Times",16), fg="#181717" ,command=delete)
+btn.place(x=300, y=500)
+
+btn = Button(online, text="Cancel" , font =("Times",16), fg="#181717",command=cancel)
+btn.place(x=400, y=500)
+
+
+
+myframe2 = Frame(online, bg="#2980b9", height=100, width=1550)
+myframe2.place(x=0, y=700)
+
+
+
+
+online.mainloop()

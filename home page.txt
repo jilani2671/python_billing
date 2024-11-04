@@ -1,0 +1,65 @@
+import os
+from tkinter import *
+
+home = Tk()
+home.title("Login Form")
+home.geometry("1550x800+0+0")
+home.config(bg='#f5f6f7')
+
+def product_details():
+    home.destroy()
+    os.system("product_details.py")
+
+
+def customer_details():
+    os.system("customer_details.py")
+
+
+def holsaler_details():
+    os.system("holsaler_details.py")
+
+
+def retailer_details():
+    os.system("retailer.py")
+
+
+def onlinepay():
+    os.system("onlinepay.py")
+
+def bill_printing():
+    os.system("bill_printing.py")
+
+def logout():
+    os.system("login.py")
+
+
+myframe = Frame(home,bg="#2980b9", height=100, width=1550)
+myframe.place(x=0,y=0)
+lable= Label(home, text="home page", bg="#2980b9", font=("Times", 20))
+lable.place(x=640,y=50)
+
+myframe2 = Frame(home, bg="#2980b9", height=100, width=1550)
+myframe2.place(x=0, y=700)
+btn = Button(home, text="product details", font =("Times", 16), fg="#181717", command=product_details)
+btn.place(x=100, y=200)
+
+btn = Button(home, text="customer details", font =("Times",16), fg="#181717", command=customer_details)
+btn.place(x=100, y=300)
+
+btn = Button(home, text="holesaler details", font =("Times",16), fg="#181717",command=holsaler_details)
+btn.place(x=100, y=400)
+
+btn = Button(home, text="retailler details", font =("Times",16), fg="#181717",command=retailer_details)
+btn.place(x=100, y=500)
+
+btn = Button(home, text=" online payment", font =("Times",16), fg="#181717",command=onlinepay)
+btn.place(x=400, y=200)
+
+btn = Button(home, text="bill printing", font =("Times",16), fg="#181717",command=bill_printing)
+btn.place(x=400, y=300)
+
+btn = Button(home, text="logout", font =("Times",16), fg="#181717",command=logout)
+btn.place(x=400, y=400)
+
+
+home.mainloop()

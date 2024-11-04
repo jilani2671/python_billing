@@ -1,0 +1,179 @@
+import os
+from tkinter import *
+from tkinter import messagebox
+import mysql.connector
+
+bill_print= Tk()
+bill_print.title("bill print")
+bill_print.geometry("1550x800+0+0")
+bill_print.config(bg='#f5f6f7')
+
+conn = mysql.connector.connect (host="localhost", database="billing", user="root", password="" )
+
+if(conn.is_connected()):
+    print("success")
+else:
+    print("Failed")
+
+def save():
+    bill_no = mytextbox.get()
+    date = mytextbox1.get()
+    customer_id = mytextbox2.get()
+    customer_name = mytextbox3.get()
+    product_id = mytextbox4.get()
+    product_name = mytextbox5.get()
+    product_price = mytextbox6.get()
+    quantity = mytextbox7.get()
+    total_price = mytextbox8.get()
+    gst = mytextbox9.get()
+    discount = mytextbox10.get()
+    final_price = mytextbox11.get()
+
+    cur = conn.cursor();
+    sql = "insert into  bill_printing( bill_no,date,customer_id,customer_name,product_id,poduct_name,poduct_price,quantity,total_price,gst,discount,final_price )values('"+bill_no+"', '"+date+"','"+customer_id+"','"+customer_name+"', '"+product_id+"','"+product_name+"','"+product_price+"','"+quantity+"','"+total_price+"','"+gst+"','"+discount+"','"+final_price+"');"
+    result = cur.execute(sql);
+    messagebox.showinfo("MESSAGE", "Records Inserted Successfully");
+    conn.commit();
+    cur.close();
+
+
+def update():
+    bill_no = mytextbox.get()
+    date = mytextbox1.get()
+    customer_id = mytextbox2.get()
+    customer_name = mytextbox3.get()
+    product_id = mytextbox4.get()
+    product_name = mytextbox5.get()
+    product_price = mytextbox6.get()
+    quantity = mytextbox7.get()
+    total_price = mytextbox8.get()
+    gst = mytextbox9.get()
+    discount = mytextbox10.get()
+    final_price = mytextbox11.get()
+
+    cur = conn.cursor();
+    sql = "update bill_printing set bill_no = '"+bill_no+"', date ='"+date+"', customer_id ='" +customer_id+"', customer_name='"+customer_name+"',product_id='"+product_id+"' , poduct_name='"+product_name+"' ,poduct_price='"+product_price+"',quantity='"+quantity+"',total_price='"+total_price+"',gst='"+gst+"',discount='"+discount+"',final_price='"+final_price+"' where bill_no = '"+bill_no+"'"
+    result = cur.execute(sql);
+    messagebox.showinfo("MESSAGE", "Records Updated Successfully");
+    conn.commit();
+    cur.close();
+
+
+def delete():
+    bill_no = mytextbox.get()
+    date = mytextbox1.get()
+    customer_id = mytextbox2.get()
+    customer_name = mytextbox3.get()
+    product_id = mytextbox4.get()
+    product_name = mytextbox5.get()
+    product_price = mytextbox6.get()
+    quantity = mytextbox7.get()
+    total_price = mytextbox8.get()
+    gst = mytextbox9.get()
+    discount = mytextbox10.get()
+    final_price = mytextbox11.get()
+
+    cur = conn.cursor();
+    sql = "delete from bill_printing where bill_no = '" +bill_no+ "' "
+    result = cur.execute(sql);
+    messagebox.showinfo("MESSAGE", "Records Deleted Successfully");
+    conn.commit();
+    cur.close();
+
+def cancel():
+    bill_no = mytextbox.get()
+    date = mytextbox1.get()
+    customer_id = mytextbox2.get()
+    customer_name = mytextbox3.get()
+    product_id = mytextbox4.get()
+    product_name = mytextbox5.get()
+    product_price = mytextbox6.get()
+    quantity = mytextbox7.get()
+    total_price = mytextbox8.get()
+    gst = mytextbox9.get()
+    discount = mytextbox10.get()
+    final_price = mytextbox11.get()
+
+    os.system("home.py")
+
+myframe = Frame(bill_print,bg="#2980b9", height=100, width=1550)
+myframe.place(x=0,y=0)
+lable= Label(bill_print, text="Bill Print", bg="#2980b9", font=("Times", 20) )
+lable.place(x=640,y=50)
+
+headlable = Label(bill_print, text="Bill no.", bg='#fadbd8',font=("Times", 12))
+headlable.place(x=90, y=150)
+mytextbox = Entry(bill_print)
+mytextbox.place(x=200, y=150)
+
+headlable = Label(bill_print, text="date", bg='#fadbd8', font=("Times", 12))
+headlable.place(x=450, y=150)
+mytextbox1 = Entry(bill_print)
+mytextbox1.place(x=500, y=150)
+
+headlable = Label(bill_print, text="Customer Id", bg='#fadbd8', font=("Times", 12))
+headlable.place(x=90, y=200)
+mytextbox2 = Entry(bill_print)
+mytextbox2.place(x=200, y=200)
+
+headlable = Label(bill_print, text="Customer Name", bg='#fadbd8', font=("Times", 12))
+headlable.place(x=90, y=250)
+mytextbox3 = Entry(bill_print)
+mytextbox3.place(x=210, y=250)
+
+headlable = Label(bill_print, text="Product Id", bg='#fadbd8', font=("Times", 12))
+headlable.place(x=90, y=300)
+mytextbox4 = Entry(bill_print)
+mytextbox4.place(x=200, y=300)
+
+headlable = Label(bill_print, text="Product Name", bg='#fadbd8', font=("Times", 12))
+headlable.place(x=90, y=350)
+mytextbox5 = Entry(bill_print)
+mytextbox5.place(x=200, y=350)
+
+headlable = Label(bill_print, text="Product Price", bg='#fadbd8', font=("Times", 12))
+headlable.place(x=90, y=400)
+mytextbox6 = Entry(bill_print)
+mytextbox6.place(x=200, y=400)
+
+headlable = Label(bill_print, text="Quantity", bg='#fadbd8', font=("Times", 12))
+headlable.place(x=90, y=450)
+mytextbox7 = Entry(bill_print)
+mytextbox7.place(x=200, y=450)
+
+headlable = Label(bill_print, text="Total price ", bg='#fadbd8', font=("Times", 12))
+headlable.place(x=90, y=500)
+mytextbox8 = Entry(bill_print)
+mytextbox8.place(x=200, y=500)
+
+headlable = Label(bill_print, text="GST% ", bg='#fadbd8', font=("Times", 12))
+headlable.place(x=400, y=400)
+mytextbox9 = Entry(bill_print)
+mytextbox9.place(x=500, y=400)
+
+headlable = Label(bill_print, text="Discount", bg='#fadbd8', font=("Times", 12))
+headlable.place(x=400, y=450)
+mytextbox10 = Entry(bill_print)
+mytextbox10.place(x=500, y=450)
+
+headlable = Label(bill_print, text="Final price", bg='#fadbd8', font=("Times", 12))
+headlable.place(x=400, y=500)
+mytextbox11 = Entry(bill_print)
+mytextbox11.place(x=500, y=500)
+
+btn = Button(bill_print, text="Save", font=("Times", 16), fg="#181717", command=save)
+btn.place(x=100, y=600)
+
+btn = Button(bill_print, text="update", font =("Times", 16), fg="#181717", command=update)
+btn.place(x=200, y=600)
+
+btn = Button(bill_print, text="delete", font=("Times", 16), fg="#181717",command=delete)
+btn.place(x=300, y=600)
+
+btn = Button(bill_print, text="Cancel", font =("Times", 16), fg="#181717", command=cancel)
+btn.place(x=400, y=600)
+
+myframe2 = Frame(bill_print, bg="#2980b9", height=100, width=1550)
+myframe2.place(x=0, y=700)
+
+bill_print.mainloop()

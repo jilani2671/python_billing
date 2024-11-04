@@ -1,0 +1,56 @@
+from tkinter import *
+from tkinter import messagebox
+import mysql.connector
+import os
+
+login = Tk()
+login.title("Login Form")
+login.geometry("1550x800+0+0")
+login.config(bg='#f5f6f7')
+
+conn = mysql.connector.connect (host="localhost", database="billing", user="root", password="" )
+
+if(conn.is_connected()):
+    print("success")
+else :
+    print("Failed")
+
+
+def myfun():
+    login_id = mytextbox.get()
+    password = mytextbox1.get()
+
+    if(login_id=="prachi" and password=="1234"):
+        messagebox.showinfo("Login Info","Login Success")
+        os.system("home.py")
+    else:
+        messagebox.showinfo("Login Info", "Login Failed")
+
+
+
+myframe = Frame(login,bg="#2980b9", height=100, width=1550)
+myframe.place(x=0,y=0)
+lable= Label(login, text="Login Page", bg="#2980b9", font=("Times",22) )
+lable.place(x=680,y=50)
+
+
+headlable = Label(login, text="Login id", bg='#fadbd8',font=("Times",15))
+headlable.place(x=575, y=200)
+mytextbox = Entry(login,font=("Times",15))
+mytextbox.place(x=675, y=200)
+
+headlable = Label(login, text=" Password", bg='#fadbd8',font=("Times",15))
+headlable.place(x=575, y=300)
+mytextbox1 = Entry(login,font=("Times",15))
+mytextbox1.place(x=675, y=300)
+
+
+myframe2 = Frame(login, bg="#2980b9", height=100, width=1550)
+myframe2.place(x=0, y=700)
+btn = Button(login, text= "login" , font =("Times",16), fg="#181717", command=myfun)
+btn.place(x=900, y=400)
+
+btn = Button(login, text= "Cancel" , font =("Times",16), fg="#181717")
+btn.place(x=500, y=400)
+
+login.mainloop()

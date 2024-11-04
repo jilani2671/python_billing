@@ -1,0 +1,102 @@
+import os
+from tkinter import *
+from tkinter import messagebox
+import mysql.connector
+
+holeseller_details = Tk()
+holeseller_details.title("holeseller details")
+holeseller_details.geometry("1550x800+0+0")
+holeseller_details.config(bg='#f5f6f7')
+
+conn = mysql.connector.connect (host="localhost", database="billing", user="root", password="" )
+
+if(conn.is_connected()):
+    print("success")
+else :
+    print("Failed")
+
+def save():
+    shop_name = mytextbox.get()
+    product_name = mytextbox1.get()
+    product_quan = mytextbox2.get()
+
+
+    cur = conn.cursor();
+    sql = "insert into holesaler_details(shop_name, product_name, Quantity)values('"+shop_name+"', '"+product_name+"','"+product_quan+"');"
+    result = cur.execute(sql);
+    messagebox.showinfo("MESSAGE", "Records Inserted Successfully");
+    conn.commit();
+    cur.close();
+
+def update():
+    shop_name = mytextbox.get()
+    product_name = mytextbox1.get()
+    product_quan = mytextbox2.get()
+
+    cur = conn.cursor();
+    sql = "update holesaler_details set shop_name = '"+shop_name+"', product_name= '"+product_name+ "',Quantity = '"+product_quan+"' where shop_name='"+shop_name+"' "
+    result = cur.execute(sql);
+    messagebox.showinfo("MESSAGE", "Records Updated Successfully");
+    conn.commit();
+    cur.close();
+
+
+def delete():
+    shop_name = mytextbox.get()
+    product_name = mytextbox1.get()
+    product_quan = mytextbox2.get()
+
+    cur = conn.cursor();
+    sql = "delete from holesaler_details where shop_name = '" +shop_name+ "' "
+    result = cur.execute(sql);
+    messagebox.showinfo("MESSAGE", "Records Deleted Successfully");
+    conn.commit();
+    cur.close();
+def cancel():
+    shop_name = mytextbox.get()
+    product_name = mytextbox1.get()
+    product_quan = mytextbox2.get()
+
+    os.system("home.py")
+
+myframe = Frame(holeseller_details,bg="#2980b9", height=100, width=1550)
+myframe.place(x=0,y=0)
+lable= Label(holeseller_details, text="holeseller details", bg="#2980b9", font=("Times",20) )
+lable.place(x=640,y=50)
+
+headlable = Label(holeseller_details, text="Shop Name", bg='#fadbd8',font=("Times",12))
+headlable.place(x=100, y=150)
+mytextbox = Entry(holeseller_details)
+mytextbox.place(x=200, y=150)
+
+headlable = Label(holeseller_details, text="Product Name", bg='#fadbd8',font=("Times",12))
+headlable.place(x=100, y=200)
+mytextbox1 = Entry(holeseller_details)
+mytextbox1.place(x=200, y=200)
+
+
+headlable = Label(holeseller_details, text="Product Quan.", bg='#fadbd8',font=("Times",12))
+headlable.place(x=100, y=250)
+mytextbox2= Entry(holeseller_details)
+mytextbox2.place(x=210, y=250)
+
+
+btn = Button(holeseller_details, text= "Save" , font =("Times",16), fg="#181717" , command=save)
+btn.place(x=100, y=400)
+
+btn = Button(holeseller_details, text= "update" , font =("Times",16), fg="#181717" , command=update)
+btn.place(x=200, y=400)
+
+btn = Button(holeseller_details, text= "delete" , font =("Times",16), fg="#181717" ,command=delete)
+btn.place(x=300, y=400)
+
+btn = Button(holeseller_details, text= "Cancel" , font =("Times",16), fg="#181717",command=cancel)
+btn.place(x=400, y=400)
+
+
+
+myframe2 = Frame(holeseller_details, bg="#2980b9", height=100, width=1550)
+myframe2.place(x=0, y=700)
+
+
+holeseller_details.mainloop()

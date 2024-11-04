@@ -1,0 +1,110 @@
+import os
+import mysql.connector
+from tkinter import *
+from tkinter import messagebox
+
+import mysql.connector
+
+retailler_details = Tk()
+retailler_details.title("retailler details")
+retailler_details.geometry("1550x800+0+0")
+retailler_details.config(bg='#f5f6f7')
+
+conn = mysql.connector.connect (host="localhost", database="billing", user="root", password="" )
+
+if(conn.is_connected()):
+    print("success")
+else :
+    print("Failed")
+
+def save():
+    retailler_name = mytextbox.get()
+    product_name = mytextbox1.get()
+    product_price = mytextbox2.get()
+    product_quan = mytextbox3.get()
+
+    cur = conn.cursor();
+    sql = "insert into retailler_details ( retailler_name, product_name, product_price,product_quan)values('"+retailler_name+"', '"+product_name+"', '"+product_price+"','"+product_quan+"'); "
+    result = cur.execute(sql);
+    messagebox.showinfo("MESSAGE", "Records Inserted Successfully");
+    conn.commit();
+    cur.close();
+
+def update():
+    retailler_name = mytextbox.get()
+    product_name = mytextbox1.get()
+    product_price = mytextbox2.get()
+    product_quan = mytextbox3.get()
+
+    cur = conn.cursor();
+    sql = "update retailler_details set retailler_name = '"+retailler_name+"', product_name= '"+product_name+"', product_price = '"+product_price+"', product_quan='"+product_quan+"' where retailler_name='"+retailler_name+"' "
+    result = cur.execute(sql);
+    messagebox.showinfo("MESSAGE", "Records Updated Successfully");
+    conn.commit();
+    cur.close();
+
+
+def delete():
+    retailler_name = mytextbox.get()
+    product_name = mytextbox1.get()
+    product_price = mytextbox2.get()
+    product_quan = mytextbox3.get()
+
+    cur = conn.cursor();
+    sql = "delete from retailler_details where retailler_name = '" +retailler_name + "' "
+    result = cur.execute(sql);
+    messagebox.showinfo("MESSAGE", "Records Deleted Successfully");
+    conn.commit();
+    cur.close();
+
+
+def cancel():
+    retailler_name = mytextbox.get()
+    product_name = mytextbox1.get()
+    product_price = mytextbox2.get()
+    product_quan = mytextbox3.get()
+
+    os.system("home.py")
+
+myframe = Frame(retailler_details,bg="#2980b9", height=100, width=1550)
+myframe.place(x=0,y=0)
+lable= Label(retailler_details, text="Retailler details", bg="#2980b9", font=("Times", 20) )
+lable.place(x=640,y=50)
+
+
+headlable = Label(retailler_details, text="Retailler name", bg='#fadbd8', font=("Times", 12))
+headlable.place(x=100, y=150)
+mytextbox = Entry(retailler_details)
+mytextbox.place(x=200, y=150)
+
+headlable = Label(retailler_details, text="product name", bg='#fadbd8', font=("Times",12))
+headlable.place(x=100, y=200)
+mytextbox1 = Entry(retailler_details)
+mytextbox1.place(x=200, y=200)
+
+headlable = Label(retailler_details, text="product price", bg='#fadbd8', font=("Times",12))
+headlable.place(x=100, y=250)
+mytextbox2 = Entry(retailler_details)
+mytextbox2.place(x=200, y=250)
+
+headlable = Label(retailler_details, text="quantity", bg='#fadbd8', font=("Times",12))
+headlable.place(x=100, y=300)
+mytextbox3 = Entry(retailler_details)
+mytextbox3.place(x=200, y=300)
+
+btn = Button(retailler_details, text="Save", font =("Times",16), fg="#181717", command=save)
+btn.place(x=100, y=400)
+
+btn = Button(retailler_details, text="update", font =("Times",16), fg="#181717", command=update)
+btn.place(x=200, y=400)
+
+btn = Button(retailler_details, text="delete", font =("Times",16), fg="#181717", command=delete)
+btn.place(x=300, y=400)
+
+btn = Button(retailler_details, text="Cancel", font =("Times",16), fg="#181717", command=cancel)
+btn.place(x=400, y=400)
+
+myframe2 = Frame(retailler_details, bg="#2980b9", height=100, width=1550)
+myframe2.place(x=0, y=700)
+
+retailler_details.mainloop()

@@ -1,0 +1,101 @@
+import os
+from tkinter import *
+from tkinter import messagebox
+import mysql.connector
+
+
+customer_details = Tk()
+customer_details.title("customer details")
+customer_details.geometry("1550x800+0+0")
+customer_details.config(bg='#f5f6f7')
+
+conn = mysql.connector.connect (host="localhost", database="billing", user="root", password="" )
+
+if(conn.is_connected()):
+    print("success")
+else:
+    print("Failed")
+
+
+def save():
+    cust_name = mytextbox.get()
+    cust_address = mytextbox1.get()
+    cust_phone = mytextbox2.get()
+
+    cur = conn.cursor();
+    sql = "insert into customer_details (customer_name, address, phone_no)values('"+cust_name+"', '"+cust_address+"', '"+cust_phone+"');"
+    result = cur.execute(sql);
+    messagebox.showinfo("MESSAGE", "Records Inserted Successfully");
+    conn.commit();
+    cur.close();
+
+def update():
+    cust_name = mytextbox.get()
+    cust_address = mytextbox1.get()
+    cust_phone = mytextbox2.get()
+
+    cur = conn.cursor();
+    sql = "update customer_details set customer_name = '"+cust_name+"', address = '"+cust_address+"', phone_no = '"+cust_phone+"' where customer_name='"+cust_name+"' "
+    result = cur.execute(sql);
+    messagebox.showinfo("MESSAGE", "Records Updated Successfully");
+    conn.commit();
+    cur.close();
+
+
+
+def cancel():
+    cust_name = mytextbox.get()
+    cust_address = mytextbox1.get()
+    cust_phone = mytextbox2.get()
+
+    os.system("home.py")
+
+
+def delete():
+    cust_name = mytextbox.get()
+    cust_address = mytextbox1.get()
+    cust_phone = mytextbox2.get()
+
+    cur = conn.cursor();
+    sql = "delete from customer_details where customer_name = '"+cust_name+"' "
+    result = cur.execute(sql);
+    messagebox.showinfo("MESSAGE", "Records Deleted Successfully");
+    conn.commit();
+    cur.close();
+
+myframe = Frame(customer_details,bg="#2980b9", height=100, width=1550)
+myframe.place(x=0,y=0)
+lable= Label(customer_details, text="Customer details", bg="#2980b9", font=("Times",20) )
+lable.place(x=640,y=50)
+
+headlable = Label(customer_details, text="Customer Name", bg='#fadbd8',font=("Times",12))
+headlable.place(x=100, y=150)
+mytextbox = Entry(customer_details)
+mytextbox.place(x=220, y=150)
+
+headlable = Label(customer_details, text="Address", bg='#fadbd8',font=("Times",12))
+headlable.place(x=100, y=200)
+mytextbox1 = Entry(customer_details)
+mytextbox1.place(x=220, y=200)
+
+headlable = Label(customer_details, text="Phone No.", bg='#fadbd8',font=("Times",12))
+headlable.place(x=100, y=250)
+mytextbox2 = Entry(customer_details)
+mytextbox2.place(x=220, y=250)
+
+btn = Button(customer_details, text="Save", font =("Times",16), fg="#181717", command=save)
+btn.place(x=100, y=400)
+
+btn = Button(customer_details, text="update", font =("Times",16), fg="#181717", command=update)
+btn.place(x=200, y=400)
+
+btn = Button(customer_details, text="delete", font =("Times",16), fg="#181717", command=delete )
+btn.place(x=300, y=400)
+
+btn = Button(customer_details, text="Cancel", font =("Times",16), fg="#181717", command=cancel)
+btn.place(x=400, y=400)
+
+myframe2 = Frame(customer_details, bg="#2980b9", height=100, width=1550)
+myframe2.place(x=0, y=700)
+
+customer_details.mainloop()
